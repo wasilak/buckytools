@@ -14,13 +14,13 @@ pipeline:
       - echo $GOPATH/bin
       - ls -lha $GOPATH/bin
 
-  # github_release:
-  #   image: plugins/github-release
-  #   secrets: [ github_token ]
-  #   files:
-  #      - bin/*
-  #   when:
-  #     event: tag
+  github_release:
+    image: plugins/github-release
+    secrets: [ github_token ]
+    files:
+       - $GOPATH/bin/*
+    when:
+      event: tag
 
 matrix:
   GO_VERSION:
