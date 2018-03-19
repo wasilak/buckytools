@@ -19,6 +19,9 @@ pipeline:
       - ls -lha $GOPATH/bin
       - cp -r $GOPATH/bin /go/src/github.com/wasilak/buckytools/
       - ls -lha /go/src/github.com/wasilak/buckytools/bin
+      - cd /go/src/github.com/wasilak/buckytools/bin
+      - find . -exec mv {} {}-$GOOS-$GOARCH \;
+      - ls -lha /go/src/github.com/wasilak/buckytools/bin
 
   github_release:
     image: plugins/github-release
@@ -32,11 +35,11 @@ matrix:
   GO_VERSION:
     - latest
 
-  # GOARCH:
-  #   - 386
-  #   - amd64
+  GOARCH:
+    - 386
+    - amd64
 
-  # GOOS: 
-  #   - darwin
-  #   - linux
+  GOOS: 
+    - darwin
+    - linux
   #   - windows
