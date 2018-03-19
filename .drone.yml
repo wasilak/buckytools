@@ -1,3 +1,7 @@
+workspace:
+  base: /go
+  path: src/github.com/wasilak/buckytools
+
 pipeline:
   build:
     image: golang:${GO_VERSION}
@@ -13,6 +17,8 @@ pipeline:
       - go install ./...
       - echo $GOPATH/bin
       - ls -lha $GOPATH/bin
+      - cp -r $GOPATH/bin /go/src/github.com/wasilak/buckytools/
+      - ls -lha /go/src/github.com/wasilak/buckytools/bin
 
   github_release:
     image: plugins/github-release
