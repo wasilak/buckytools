@@ -18,7 +18,7 @@ pipeline:
     image: plugins/github-release
     secrets: [ github_token ]
     files:
-       - $GOPATH/bin/*
+       - /go/bin/*
     when:
       event: tag
 
