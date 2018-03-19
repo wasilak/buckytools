@@ -22,6 +22,7 @@ pipeline:
       # - cd /go/src/github.com/wasilak/buckytools/bin
       - find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \;
       # - ls -lha /go/src/github.com/wasilak/buckytools/bin
+      - ls -lha /go/bin
 
   github_release:
     image: plugins/github-release
@@ -40,6 +41,6 @@ matrix:
     - amd64
 
   GOOS: 
-    - darwin
-    # - linux
+    # - darwin
+    - linux
   #   - windows
