@@ -5,24 +5,11 @@ workspace:
 pipeline:
   build:
     image: golang:${GO_VERSION}
-    # secrets: [ test_example ]
-    # environment:
-    #   - GOBIN=(pwd)/bin
     commands:
-      # - echo $TEST_EXAMPLE
-      # - go get -t -d -v ./...
-      # - go install -v -o bin/hello-$GOOS-$GOARCH hello.go
       - go get github.com/wasilak/buckytools
       - cd $GOPATH/src/github.com/wasilak/buckytools
       - go install ./...
-      # - echo $GOPATH/bin
-      - ls -lha $GOPATH/bin
-      # - cp -r $GOPATH/bin /go/src/github.com/wasilak/buckytools/
-      # - ls -lha /go/src/github.com/wasilak/buckytools/bin
-      # - cd /go/src/github.com/wasilak/buckytools/bin
       - find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \;
-      # - ls -lha /go/src/github.com/wasilak/buckytools/bin
-      - ls -lha $GOPATH/bin
 
   github_release:
     image: plugins/github-release
@@ -40,10 +27,7 @@ matrix:
     - latest
 
   GOARCH:
-    # - 386
     - amd64
 
   GOOS: 
-    # - darwin
     - linux
-  #   - windows
