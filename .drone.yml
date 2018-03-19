@@ -12,22 +12,22 @@ pipeline:
       # - echo $TEST_EXAMPLE
       # - go get -t -d -v ./...
       # - go install -v -o bin/hello-$GOOS-$GOARCH hello.go
-      - go get github.com/jjneely/buckytools
-      - cd $GOPATH/src/github.com/jjneely/buckytools
+      - go get github.com/wasilak/buckytools
+      - cd $GOPATH/src/github.com/wasilak/buckytools
       - go install ./...
       - echo $GOPATH/bin
       - ls -lha $GOPATH/bin
       - cp -r $GOPATH/bin /go/src/github.com/wasilak/buckytools/
       - ls -lha /go/src/github.com/wasilak/buckytools/bin
-      - cd /go/src/github.com/wasilak/buckytools/bin
-      - find . -type f -exec mv {} {}-$GOOS-$GOARCH \;
-      - ls -lha /go/src/github.com/wasilak/buckytools/bin
+      # - cd /go/src/github.com/wasilak/buckytools/bin
+      - find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \;
+      # - ls -lha /go/src/github.com/wasilak/buckytools/bin
 
   github_release:
     image: plugins/github-release
     secrets: [ github_token ]
     files:
-       - bin/*
+       - /go/bin/*
     when:
       event: tag
 
