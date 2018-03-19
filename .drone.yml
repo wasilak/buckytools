@@ -41,5 +41,5 @@ matrix:
 
   GOOS: 
     - darwin
-    - linux
+    # - linux
   #   - windows
