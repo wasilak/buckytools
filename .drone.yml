@@ -18,7 +18,7 @@ steps:
   - go get github.com/wasilak/buckytools
   - cd $GOPATH/src/github.com/wasilak/buckytools
   - go install ./...
-  - "find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \\;"
+  - find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \\;
 
 - name: github_release
   pull: default
