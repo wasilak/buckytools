@@ -1,33 +1,37 @@
+---
+kind: pipeline
+name: matrix-1
+
+platform:
+  os: linux
+  arch: amd64
+
 workspace:
   base: /go
   path: src/github.com/wasilak/buckytools
 
-pipeline:
-  build:
-    image: golang:${GO_VERSION}
-    commands:
-      - go get github.com/wasilak/buckytools
-      - cd $GOPATH/src/github.com/wasilak/buckytools
-      - go install ./...
-      - find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \;
+steps:
+- name: build
+  pull: default
+  image: golang:latest
+  commands:
+  - go get github.com/wasilak/buckytools
+  - cd $GOPATH/src/github.com/wasilak/buckytools
+  - go install ./...
+  - "find /go/bin -type f -exec mv {} {}-$GOOS-$GOARCH \\;"
 
-  github_release:
-    image: plugins/github-release
-    secrets: [ github_token ]
+- name: github_release
+  pull: default
+  image: plugins/github-release
+  settings:
     files:
-       - /go/bin/*
-    when:
-      event: tag
+      from_secret: ""
+      value:
+      - "/go/bin/*"
+  environment:
+    GITHUB_TOKEN:
+      from_secret: github_token
+  when:
+    event:
+    - tag
 
-matrix:
-  GOPATH:
-    - /go
-
-  GO_VERSION:
-    - latest
-
-  GOARCH:
-    - amd64
-
-  GOOS:
-    - linux
