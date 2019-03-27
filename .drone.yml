@@ -29,5 +29,5 @@ matrix:
   GOARCH:
     - amd64
 
-  GOOS: 
+  GOOS:
     - linux
